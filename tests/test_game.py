@@ -13,8 +13,9 @@ def known_games():
     ]
 
 
-def test_get_known_games(known_games):
+@pytest.mark.asyncio
+async def test_get_known_games(known_games):
     for game_id in known_games:
-        game = src_api.query(Games).get(game_id)
+        game = await src_api.query(Games).get(game_id)
 
         assert game.weblink != "", f"Known game {game_id} doesn't have a weblink!"
