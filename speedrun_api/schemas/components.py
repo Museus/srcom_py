@@ -1,9 +1,7 @@
-from __future__ import annotations
-
 from datetime import datetime
 from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, OnErrorOmit
 
 
 class Names(BaseModel):
@@ -169,11 +167,7 @@ class Variable(BaseModel):
     links: list[Link]
 
 
-class Variables(BaseModel):
-    data: list[Variable]
-
-
-class CategoryData(BaseModel):
+class Category(BaseModel):
     id: str
     name: str
     weblink: str
@@ -182,11 +176,6 @@ class CategoryData(BaseModel):
     players: list[Union[RegisteredPlayer, GuestPlayer]]
     miscellaneous: bool
     links: list[Link]
-    variables: Variables
-
-
-class Category(BaseModel):
-    data: CategoryData
 
 
 class Videos(BaseModel):
@@ -297,5 +286,5 @@ class Leaderboard(BaseModel):
     emulators: Optional[str] = None
     video_only: bool = Field(..., alias="video-only")
     timing: str
-    runs: list[LeaderboardEntry]
+    runs: list[OnErrorOmit[LeaderboardEntry]]
     links: list[Reference]
