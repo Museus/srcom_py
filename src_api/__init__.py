@@ -8,6 +8,7 @@ import requests
 from requests import HTTPError
 from requests.adapters import HTTPAdapter, Retry
 
+from .endpoint import registered_endpoints
 
 logger = logging.getLogger("SpeedrunApi")
 
@@ -16,6 +17,7 @@ EndpointType = TypeVar("EndpointType")
 
 class SpeedrunApi:
     SITE_URL: str = "https://speedrun.com/api/v1"
+    endpoints = registered_endpoints
 
     def __init__(self, api_key: str = None):
         session = requests.Session()
@@ -31,7 +33,10 @@ class SpeedrunApi:
 
         self.session = session
 
-    def query(self, endpointType: EndpointType) -> EndpointType:
+    def query(self, endpointType: EndpointType | str) -> EndpointType:
+        if isinstance(endpointType, str):
+            return getattr(self.endpoints, endpointType.lower())(self)
+
         return endpointType(self)
 
     async def _get(self, path: str, params: Optional[Mapping[str, Any]] = None):

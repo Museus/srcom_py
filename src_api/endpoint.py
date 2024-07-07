@@ -20,6 +20,14 @@ class PaginationMixin:
         self.offset = entries
 
 
+class EndpointRegistry:
+    def register(self, endpoint_name, endpoint):
+        setattr(self, endpoint_name, endpoint)
+
+
+registered_endpoints = EndpointRegistry()
+
+
 class Endpoint:
     _path: str
     params: dict[str, str | int]
@@ -38,6 +46,9 @@ class Endpoint:
     def __init__(self: EndpointT, api_instance: "SpeedrunApi") -> EndpointT:
         self.api = api_instance
         self.params = {}
+
+    def __init_subclass__(cls) -> None:
+        registered_endpoints.register(cls.__name__.lower(), cls)
 
     def options(
         self: EndpointT, *, validate: bool = None, unwrap: bool = None
