@@ -1,7 +1,6 @@
 import pytest
 
-from speedrun_api.api import src_api
-from speedrun_api.endpoint import Games
+from src_api.endpoint import Games
 
 
 @pytest.fixture
@@ -14,7 +13,7 @@ def known_games():
 
 
 @pytest.mark.asyncio
-async def test_get_known_games(known_games):
+async def test_get_known_games(src_api, known_games):
     for game_id in known_games:
         game = await src_api.query(Games).get(game_id)
 

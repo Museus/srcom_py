@@ -1,7 +1,6 @@
 import pytest
 
-from speedrun_api.api import src_api
-from speedrun_api.endpoint import Leaderboards
+from src_api.endpoint import Leaderboards
 
 
 @pytest.fixture
@@ -15,7 +14,7 @@ def known_leaderboards():
 
 
 @pytest.mark.asyncio
-async def test_get_known_leaderboards(known_leaderboards):
+async def test_get_known_leaderboards(src_api, known_leaderboards):
     for game_id, category_id in known_leaderboards:
         leaderboard = await (
             src_api.query(Leaderboards).where(game=game_id, category=category_id).all()
