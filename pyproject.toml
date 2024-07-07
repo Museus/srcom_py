@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "srcom_py"
+version = "0.0.1"
+dependencies = [
+  "annotated-types==0.7.0",
+  "certifi==2024.7.4",
+  "charset-normalizer==3.3.2",
+  "idna==3.7",
+  "pydantic==2.8.2",
+  "pydantic_core==2.20.1",
+  "requests==2.32.3",
+  "typing_extensions==4.12.2",
+  "urllib3==2.2.2",
+]
+requires-python = ">=3.8"
+authors = [
+  {name = "Museus", email = "museus@proton.me"},
+]
+maintainers = [
+  {name = "Museus", email = "museus@proton.me"},
+]
+description = "Pydantic-validated ORM for interacting with the speedrun.com API"
+readme = "README.rst"
+license = { file = "LICENSE.txt" }
+keywords = ["api", "speedrun", "toolkit", "orm"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
+
+[project.optional-dependencies]
+testing = ["pytest", "pytest-asyncio"]
+
+[project.urls]
+Homepage = "https://github.com/Museus/srcom_py"
+Documentation = "https://github.com/Museus/srcom_py/README.rst"
+Repository = "https://github.com/Museus/srcom_py.git"
+"Bug Tracker" = "https://github.com/Museus/srcom_py/issues"
+Changelog = "https://github.com/Museus/srcom_py/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    '/README.rst',
+    '/srcom_py',
+    '/tests',
+]
